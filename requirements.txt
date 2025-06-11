@@ -1,0 +1,3 @@
+Flask>=2.0.0
+pabutools>=0.1.2
+

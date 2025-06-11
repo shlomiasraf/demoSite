@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GPseq Web Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn.secondary {
+            background-color: #2196F3;
+            margin-left: 10px;
+        }
+        .result, .error {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .result {
+            background-color: #e0ffe0;
+            color: #006400;
+        }
+        .error {
+            background-color: #ffe0e0;
+            color: #a00000;
+        }
+        .info {
+            background-color: #e7f3fe;
+            color: #084298;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: gray;
+            text-align: center;
+        }
+        pre.logs {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+
+    <script>
+        function fillExampleData() {
+            document.getElementById("budget").value = "10";
+            document.getElementById("projects").value = "c1,4\nc2,3\nc3,5";
+            document.getElementById("profile").value = "0,1\n1,2\n0,2";
+        }
+    </script>
+</head>
+<body>
+
+<h1>Run the GPseq Algorithm</h1>
+
+<div class="info">
+    <p><strong>About the Algorithm:</strong><br>
+    GPseq (Generalized Phragmen Sequential) is a proportional representation algorithm used in participatory budgeting.
+    It aims to select a set of projects within a given budget by distributing load (cost responsibility) fairly among voters,
+    based on their approvals. At each step, it selects the project that minimally increases the maximum individual load.</p>
+</div>
+
+<div class="info">
+    <p>Enter the budget, project list, and approval profile using the following format:</p>
+    <ul>
+        <li><strong>Budget:</strong> A single number (e.g., <code>10</code>)</li>
+        <li><strong>Projects:</strong> Each line in the format <code>name,cost</code> (e.g., <code>c1,4</code>)</li>
+        <li><strong>Approval Profile:</strong> Each line represents a voter, listing approved project indices separated by commas (e.g., <code>0,1</code>)</li>
+    </ul>
+</div>
+
+<form method="post">
+    <label for="budget">Budget:</label>
+    <input type="text" id="budget" name="budget" required>
+
+    <label for="projects">Project List (e.g., c1,4):</label>
+    <textarea id="projects" name="projects" rows="5" required></textarea>
+
+    <label for="profile">Approval Profile (e.g., 0,1):</label>
+    <textarea id="profile" name="profile" rows="5" required></textarea>
+
+    <button type="submit" class="btn">Run GPseq</button>
+    <button type="button" class="btn secondary" onclick="fillExampleData()">Load Example Input</button>
+</form>
+
+{% if result %}
+    <div class="result">
+        <h3>Selected Projects:</h3>
+        <ul>
+            {% for name in result %}
+                <li>{{ name }}</li>
+            {% endfor %}
+        </ul>
+
+        {% if logs %}
+            <h3>Execution Log:</h3>
+            <pre class="logs">{{ logs }}</pre>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% if error %}
+    <div class="error">
+        <strong>Error:</strong> {{ error }}
+    </div>
+{% endif %}
+
+<footer>
+    <p><a href="/about">About</a> | <a href="https://arxiv.org/abs/1807.06504" target="_blank">Paper Link</a></p>
+</footer>
+
+</body>
+</html>
