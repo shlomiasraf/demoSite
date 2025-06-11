@@ -71,6 +71,13 @@ def index():
             error = str(e)
 
     return render_template("index.html", result=result, error=error, logs=logs)
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+@app.route("/paper")
+def paper():
+    return render_template("paper.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

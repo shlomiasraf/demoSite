@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f9f9f9;
+            line-height: 1.6;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: auto;
+        }
+        img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        a {
+            color: #007acc;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <img src="{{ url_for('static', filename='profile.jpeg') }}" alt="Profile Photo">
+    <h1>About Me</h1>
+    <p>
+        My name is <strong>Shlomi Asraf</strong>. I'm a third-year computer science student with a strong passion for full-stack development.
+        Over the past few years, I’ve worked on various projects involving web development, backend services, and interactive systems.
+        This project combines my interest in fair algorithms and user-friendly interfaces.
+    </p>
+    <p>
+        You can view the original research paper that inspired this project <a href="/paper" target="_blank">here</a>.
+    </p>
+</body>
+</html>
