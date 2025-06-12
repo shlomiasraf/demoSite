@@ -67,11 +67,40 @@
     </style>
 
     <script>
-        function fillExampleData() {
-            document.getElementById("budget").value = "10";
-            document.getElementById("projects").value = "c1,4\nc2,3\nc3,5";
-            document.getElementById("profile").value = "0,1\n1,2\n0,2";
+    function fillExampleData() {
+        const numProjects = Math.floor(Math.random() * 5) + 3;
+        const numVoters = Math.floor(Math.random() * 5) + 3;
+
+        let projects = "";
+        let totalCost = 0;
+
+        for (let i = 0; i < numProjects; i++) {
+            const name = "c" + (i + 1);
+            const cost = Math.floor(Math.random() * 5) + 1;
+            projects += `${name},${cost}\n`;
+            totalCost += cost;
         }
+
+        const budget = Math.floor(totalCost * 0.6);
+
+        let profile = "";
+        for (let i = 0; i < numVoters; i++) {
+            const numApprovals = Math.floor(Math.random() * numProjects) + 1;
+            const choices = Array.from({ length: numProjects }, (_, idx) => idx);
+            const voterChoices = [];
+
+            while (voterChoices.length < numApprovals) {
+                const randomIndex = Math.floor(Math.random() * choices.length);
+                voterChoices.push(choices.splice(randomIndex, 1)[0]);
+            }
+
+            profile += voterChoices.join(",") + "\n";
+        }
+
+        document.getElementById("budget").value = budget;
+        document.getElementById("projects").value = projects.trim();
+        document.getElementById("profile").value = profile.trim();
+    }
     </script>
 </head>
 <body>
